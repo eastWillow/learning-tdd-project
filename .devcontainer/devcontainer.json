@@ -1,0 +1,8 @@
+{
+    "image":"mcr.microsoft.com/devcontainers/universal:2",
+    "remoteEnv": {
+        "TDD_PROJECT_ROOT": "/workspaces/learning-tdd-project",
+        "GO111MODULE" : "on",
+        "GOPATH" : ""
+     }
+}
