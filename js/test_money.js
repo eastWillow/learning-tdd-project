@@ -4,7 +4,7 @@ class Dollar{
         this.amount = amount;
     }
     times(multiplier){
-        return new Dollar(10);
+        return new Dollar(this.amount * multiplier);
     }
 }
 let fiver = new Dollar(5);
