@@ -38,9 +38,9 @@ let tenEuros = new Money(10, "EUR")
 let twentyEuros = new Money(20, "EUR")
 assert.deepStrictEqual(tenEuros.times(2), twentyEuros)
 
-let originalMoney = new Money(4002, "KRW")
-let actualMoneyAfterDivision = originalMoney.divide(4)
-let expectedMoneyAfterDivision = new Money(1000.5, "KRW")
+let originalMoney = new Money(2500.5, "KRW")
+let actualMoneyAfterDivision = originalMoney.divide(2.5)
+let expectedMoneyAfterDivision = new Money(1000.2, "KRW")
 assert.deepStrictEqual(actualMoneyAfterDivision, expectedMoneyAfterDivision)
 
 let fifteenDollars = new Money(15, "USD");

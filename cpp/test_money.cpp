@@ -3,21 +3,31 @@
 
 class Money{
     public:
-    int amount;
+    double amount;
     std::string currency;
-    Money(int amount, std::string currency){
+    Money(double amount, std::string currency){
         this->amount = amount;
         this->currency = currency;
     }
-    Money times(int multiplier){
+    Money times(double multiplier){
         return Money(this->amount * multiplier, this->currency);
     }
-    Money divide(int divisor){
+    Money divide(double divisor){
         return Money(this->amount / divisor, this->currency);
     }
     // Overload equality operator for Point objects
     bool operator==(const Money& other) const {
-        return (this->amount == other.amount) && (this->currency == other.currency);
+        bool equal = (this->amount == other.amount) && (this->currency == other.currency);
+        if(!equal){
+            std::cout << "Values differ: ";
+            if(this->amount != other.amount){
+                std::cout << "amount: " << this->amount << " != " << other.amount << "; ";
+            }
+            if(this->currency != other.currency){
+                std::cout << "currency: " << this->currency << " != " << other.currency << "; ";
+            }
+        }
+        return equal;
     }
 };
 
@@ -39,9 +49,9 @@ TEST(TestMoney, TestMultiplicationInEuros)
     EXPECT_EQ(twentyEuros.currency, "EUR");
 }
 
-auto orignalMoney = Money(4002,"KRW");
-auto actualMoneyAfterDivision = orignalMoney.divide(4);
-auto expectedMoneyAdterDivision = Money(1000.5, "KRW");
+auto orignalMoney = Money(2500.5,"KRW");
+auto actualMoneyAfterDivision = orignalMoney.divide(2.5);
+auto expectedMoneyAdterDivision = Money(1000.2, "KRW");
 
 TEST(TestMoney, TestDivisions)
 {

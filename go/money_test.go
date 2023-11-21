@@ -13,7 +13,7 @@ func (m Money) Times(multiplier int) Money {
 	return Money{amount: m.amount * float64(multiplier), currency: m.currency}
 }
 
-func (m Money) Divide(divisor int) Money {
+func (m Money) Divide(divisor float64) Money {
 	return Money{amount: m.amount / float64(divisor), currency: m.currency}
 }
 
@@ -53,9 +53,9 @@ func TestMultiplactionInEuros(t *testing.T) {
 }
 
 func TestDivision(t *testing.T) {
-	origianlMoney := Money{amount: 4002, currency: "KRW"}
-	actualResult := origianlMoney.Divide(4)
-	expectedResult := Money{amount: 1000.5, currency: "KRW"}
+	origianlMoney := Money{amount: 2500.5, currency: "KRW"}
+	actualResult := origianlMoney.Divide(2.5)
+	expectedResult := Money{amount: 1000.2, currency: "KRW"}
 	assertEqual(t, expectedResult, actualResult)
 }
 

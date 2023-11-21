@@ -34,9 +34,9 @@ class TestMoney(unittest.TestCase):
         twentyEuros = Money(20, "EUR")
         self.assertEqual(twentyEuros, tenEuros.times(2))
     def testDivision(self):
-        origianlMoney = Money(4002, "KRW")
-        actualMoneyAfterDivision = origianlMoney.divide(4)
-        expectedMoneyAfterDivision = Money(1000.5, "KRW")
+        origianlMoney = Money(2500.5, "KRW")
+        actualMoneyAfterDivision = origianlMoney.divide(2.5)
+        expectedMoneyAfterDivision = Money(1000.2, "KRW")
         self.assertEqual(expectedMoneyAfterDivision,
                          actualMoneyAfterDivision)
     def testAddition(self):
