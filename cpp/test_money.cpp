@@ -7,7 +7,7 @@ class Dollar{
         this->amount = amount;
     }
     auto times(int multiplier){
-        return Dollar(10);
+        return Dollar(this->amount * multiplier);
     }
 };
 
