@@ -11,3 +11,10 @@ echo "======================="
 echo "=========PY============"
 python3 $TDD_PROJECT_ROOT/py/test_money.py
 echo "======================="
+
+echo "=========C++============"
+cd $TDD_PROJECT_ROOT/cpp
+make clean
+make
+./test_money
+echo "======================="
