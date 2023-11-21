@@ -1,25 +1,6 @@
 #include "gtest/gtest.h"
 #include <string>
 
-class Dollar{
-    public:
-    int amount;
-    Dollar(int amount){
-        this->amount = amount;
-    }
-    Dollar times(int multiplier){
-        return Dollar(this->amount * multiplier);
-    }
-};
-
-auto fiver = Dollar(5);
-auto tenner = fiver.times(2);
-
-TEST(TestMoney, TestMultiplication)
-{
-    EXPECT_EQ(tenner.amount, 10); 
-}
-
 class Money{
     public:
     int amount;
@@ -29,9 +10,18 @@ class Money{
         this->currency = currency;
     }
     Money times(int multiplier){
-        return Money(this->amount * multiplier,"EUR");
+        return Money(this->amount * multiplier, this->currency);
     }
 };
+
+auto fiver = Money(5,"USD");
+auto tenner = fiver.times(2);
+
+TEST(TestMoney, TestMultiplicationInDollars)
+{
+    EXPECT_EQ(tenner.amount, 10); 
+    EXPECT_EQ(tenner.currency, "USD");
+}
 
 auto tenEuros = Money(10, "EUR");
 auto twentyEuros = tenEuros.times(2);
