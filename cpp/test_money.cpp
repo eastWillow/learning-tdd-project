@@ -15,6 +15,10 @@ class Money{
     Money divide(int divisor){
         return Money(this->amount / divisor, this->currency);
     }
+    // Overload equality operator for Point objects
+    bool operator==(const Money& other) const {
+        return (this->amount == other.amount) && (this->currency == other.currency);
+    }
 };
 
 auto fiver = Money(5,"USD");
@@ -41,8 +45,5 @@ auto expectedMoneyAdterDivision = Money(1000.5, "KRW");
 
 TEST(TestMoney, TestDivisions)
 {
-    EXPECT_EQ(actualMoneyAfterDivision.amount,
-            expectedMoneyAdterDivision.amount);
-    EXPECT_EQ(actualMoneyAfterDivision.currency,
-            expectedMoneyAdterDivision.currency);
+    EXPECT_EQ(actualMoneyAfterDivision, expectedMoneyAdterDivision);
 }
