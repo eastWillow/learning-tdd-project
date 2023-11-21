@@ -12,6 +12,9 @@ class Money{
     Money times(int multiplier){
         return Money(this->amount * multiplier, this->currency);
     }
+    Money divide(int divisor){
+        return Money(this->amount / divisor, this->currency);
+    }
 };
 
 auto fiver = Money(5,"USD");
@@ -30,4 +33,16 @@ TEST(TestMoney, TestMultiplicationInEuros)
 {
     EXPECT_EQ(twentyEuros.amount, 20);
     EXPECT_EQ(twentyEuros.currency, "EUR");
+}
+
+auto orignalMoney = Money(4002,"KRW");
+auto actualMoneyAfterDivision = orignalMoney.divide(4);
+auto expectedMoneyAdterDivision = Money(1000.5, "KRW");
+
+TEST(TestMoney, TestDivisions)
+{
+    EXPECT_EQ(actualMoneyAfterDivision.amount,
+            expectedMoneyAdterDivision.amount);
+    EXPECT_EQ(actualMoneyAfterDivision.currency,
+            expectedMoneyAdterDivision.currency);
 }
