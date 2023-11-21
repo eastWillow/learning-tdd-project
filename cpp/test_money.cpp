@@ -72,7 +72,7 @@ class Portfolio{
         double total = std::accumulate(moneys.begin(), moneys.end(), 0,
                                         [](double accumulator, const Money& Money) {
                                             return accumulator + Money.amount;
-                                            }); // 從 0 開始加總
+                                            }); // accumulate from 0 
         return Money(total, currency);
     }
 };
