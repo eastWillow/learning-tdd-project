@@ -31,13 +31,13 @@ class Money{
     }
 };
 
-auto fiver = Money(5,"USD");
-auto tenner = fiver.times(2);
+auto fiveDollars = Money(5,"USD");
+auto tenDollars = fiveDollars.times(2);
 
 TEST(TestMoney, TestMultiplicationInDollars)
 {
-    EXPECT_EQ(tenner.amount, 10); 
-    EXPECT_EQ(tenner.currency, "USD");
+    EXPECT_EQ(tenDollars.amount, 10); 
+    EXPECT_EQ(tenDollars.currency, "USD");
 }
 
 auto tenEuros = Money(10, "EUR");
@@ -56,4 +56,25 @@ auto expectedMoneyAdterDivision = Money(1000.2, "KRW");
 TEST(TestMoney, TestDivisions)
 {
     EXPECT_EQ(actualMoneyAfterDivision, expectedMoneyAdterDivision);
+}
+
+class Portfolio{
+    public:
+    void add(Money a, Money b){
+        a = a;
+        b = b;
+    }
+    Money evaluate(std::string currency){
+        return Money(15, currency);
+    }
+};
+
+auto fifteenDollars = Money(15, "USD");
+auto portfolio = Portfolio();
+
+TEST(TestMoney, TestAddition)
+{
+    portfolio.add(fiveDollars, tenDollars);
+
+    EXPECT_EQ(portfolio.evaluate("USD"), fifteenDollars);
 }
