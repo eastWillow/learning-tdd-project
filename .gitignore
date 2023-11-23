@@ -24,3 +24,6 @@ go.work
 *.a
 *.o
 test_money
+
+# python
+__pycache__/

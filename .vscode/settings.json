@@ -61,5 +61,6 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/workspaces/learning-tdd-project/googletest"
 }
