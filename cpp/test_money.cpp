@@ -22,7 +22,7 @@ TEST(TestMoney, TestDivisions)
 }
 
 
-TEST(TestMoney, TestAddition)
+TEST(TestPorfolio, TestAddition)
 {
     auto fiveDollars = Money(5,"USD");
     auto tenDollars = fiveDollars.times(2);
@@ -34,7 +34,7 @@ TEST(TestMoney, TestAddition)
     EXPECT_EQ(portfolio.evaluate("USD"), fifteenDollars);
 }
 
-TEST(TestMoney, TestAdditionOfDollarsAndEuros)
+TEST(TestPorfolio, TestAdditionOfDollarsAndEuros)
 {
     auto fiveDollars = Money(5,"USD");
     auto tenEuros = Money(10, "EUR");
@@ -43,6 +43,19 @@ TEST(TestMoney, TestAdditionOfDollarsAndEuros)
     portfolio.add(fiveDollars, tenEuros);
     auto actualValue = portfolio.evaluate("USD");
     auto expectedValue = Money(17, "USD");
+
+    EXPECT_EQ(actualValue, expectedValue);
+}
+
+TEST(TestPorfolio, TestAdditionOfDollarsAndWons)
+{
+    auto oneDollar = Money(1, "USD");
+    auto elevenHundredWons = Money(1100, "KRW");
+    auto portfolio = Portfolio();
+
+    portfolio.add(oneDollar, elevenHundredWons);
+    auto actualValue = portfolio.evaluate("KRW");
+    auto expectedValue = Money(2200, "KRW");
 
     EXPECT_EQ(actualValue, expectedValue);
 }

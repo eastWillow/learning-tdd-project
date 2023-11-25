@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iomanip>
 
 class Money{
     public:
@@ -25,7 +26,9 @@ class Money{
     }
     // Overload Display Value in Google Test
     friend std::ostream& operator<<(std::ostream& os, const Money& obj) {
-        os << "Money { amount: " << obj.amount << ", currency: " << obj.currency << " }";
+        os  << "Money { amount: " << std::fixed << std::setprecision(2) << obj.amount 
+            << ", currency: " << std::fixed << std::setprecision(2) << obj.currency 
+            << " }";
         return os;
     }
 };

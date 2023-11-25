@@ -4,15 +4,20 @@
 #include <string>
 #include <vector>
 #include <numeric> //std::accumulate
+#include <map>
 
 class Portfolio{
     private:
     std::vector<Money> moneys;
+    std::map<std::string, double> exchangeRates {
+        std::make_pair("EUR->USD", 1.2),
+        std::make_pair("USD->KRW", 1100)};
     double convert(Money aMoney, std::string aCurrency){
         if(aMoney.currency == aCurrency){
             return aMoney.amount;
         }
-        return aMoney.amount * 1.2;
+        std::string key = aMoney.currency + "->" + aCurrency;
+        return aMoney.amount * exchangeRates[key];
     }
     public:
     void add(Money a, Money b){
