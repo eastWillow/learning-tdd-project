@@ -8,6 +8,12 @@
 class Portfolio{
     private:
     std::vector<Money> moneys;
+    double convert(Money aMoney, std::string aCurrency){
+        if(aMoney.currency == aCurrency){
+            return aMoney.amount;
+        }
+        return aMoney.amount * 1.2;
+    }
     public:
     void add(Money a, Money b){
         std::vector<Money> moneys = {a, b};
@@ -15,8 +21,8 @@ class Portfolio{
     }
     Money evaluate(std::string currency){
         double total = std::accumulate(moneys.begin(), moneys.end(), 0,
-                                        [](double accumulator, const Money& Money) {
-                                            return accumulator + Money.amount;
+                                        [this,currency](double accumulator, const Money& Money) {
+                                            return accumulator + convert(Money, currency);
                                             }); // accumulate from 0 
         return Money(total, currency);
     }

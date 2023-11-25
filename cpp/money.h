@@ -21,16 +21,12 @@ class Money{
     // Overload equality operator for Point objects
     bool operator==(const Money& other) const {
         bool equal = (this->amount == other.amount) && (this->currency == other.currency);
-        if(!equal){
-            std::cout << "Values differ: ";
-            if(this->amount != other.amount){
-                std::cout << "amount: " << this->amount << " != " << other.amount << "; ";
-            }
-            if(this->currency != other.currency){
-                std::cout << "currency: " << this->currency << " != " << other.currency << "; ";
-            }
-        }
         return equal;
+    }
+    // Overload Display Value in Google Test
+    friend std::ostream& operator<<(std::ostream& os, const Money& obj) {
+        os << "Money { amount: " << obj.amount << ", currency: " << obj.currency << " }";
+        return os;
     }
 };
 

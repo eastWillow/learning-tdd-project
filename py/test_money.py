@@ -21,5 +21,16 @@ class TestMoney(unittest.TestCase):
         portfilo.add(fiveDollars, tenDollars)
         self.assertEqual(fifteenDollars, portfilo.evaluate("USD"))
 
+    def testAdditionOfDollarsAndEuros(self):
+        fiveDollars = Money(5, "USD")
+        tenEuros = Money(10, "EUR")
+        portfilo = Portfilo()
+        portfilo.add(fiveDollars, tenEuros)
+        expectedValue = Money(17, "USD")
+        actualValue = portfilo.evaluate("USD")
+        self.assertEqual(
+            expectedValue, actualValue, "%s != %s" %(expectedValue, actualValue)
+        )
+
 if __name__ == '__main__':
     unittest.main()
