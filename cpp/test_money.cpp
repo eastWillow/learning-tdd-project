@@ -1,6 +1,18 @@
 #include "gtest/gtest.h"
 #include "money.h"
 #include "portfolio.h"
+#include "bank.h"
+
+class TestPortfolio : public ::testing::Test {
+public:
+    Bank bank;
+
+    void SetUp() override {
+        bank = Bank();
+        bank.addExchangeRate("EUR", "USD", 1.2);
+        bank.addExchangeRate("USD", "KRW", 1100);
+    }
+};
 
 TEST(TestMoney, TestMultiplication)
 {
@@ -22,7 +34,7 @@ TEST(TestMoney, TestDivisions)
 }
 
 
-TEST(TestPortfolio, TestAddition)
+TEST_F(TestPortfolio, TestAddition)
 {
     auto fiveDollars = Money(5,"USD");
     auto tenDollars = fiveDollars.times(2);
@@ -32,10 +44,10 @@ TEST(TestPortfolio, TestAddition)
     portfolio.add(fiveDollars);
     portfolio.add(tenDollars);
 
-    EXPECT_EQ(portfolio.evaluate("USD"), fifteenDollars);
+    EXPECT_EQ(portfolio.evaluate(bank, "USD"), fifteenDollars);
 }
 
-TEST(TestPortfolio, TestAdditionOfDollarsAndEuros)
+TEST_F(TestPortfolio, TestAdditionOfDollarsAndEuros)
 {
     auto fiveDollars = Money(5,"USD");
     auto tenEuros = Money(10, "EUR");
@@ -44,13 +56,13 @@ TEST(TestPortfolio, TestAdditionOfDollarsAndEuros)
     portfolio.add(fiveDollars);
     portfolio.add(tenEuros);
 
-    auto actualValue = portfolio.evaluate("USD");
+    auto actualValue = portfolio.evaluate(bank, "USD");
     auto expectedValue = Money(17, "USD");
 
     EXPECT_EQ(actualValue, expectedValue);
 }
 
-TEST(TestPortfolio, TestAdditionOfDollarsAndWons)
+TEST_F(TestPortfolio, TestAdditionOfDollarsAndWons)
 {
     auto oneDollar = Money(1, "USD");
     auto elevenHundredWons = Money(1100, "KRW");
@@ -59,13 +71,13 @@ TEST(TestPortfolio, TestAdditionOfDollarsAndWons)
     portfolio.add(oneDollar);
     portfolio.add(elevenHundredWons);
 
-    auto actualValue = portfolio.evaluate("KRW");
+    auto actualValue = portfolio.evaluate(bank, "KRW");
     auto expectedValue = Money(2200, "KRW");
 
     EXPECT_EQ(actualValue, expectedValue);
 }
 
-TEST(TestPortfolio, TestAdditionWithMultipleMissingExchangeRates)
+TEST_F(TestPortfolio, TestAdditionWithMultipleMissingExchangeRates)
 {
     auto oneDollar = Money(1, "USD");
     auto oneEuro = Money(1, "EUR");
@@ -76,11 +88,32 @@ TEST(TestPortfolio, TestAdditionWithMultipleMissingExchangeRates)
     portfolio.add(oneEuro);
     portfolio.add(oneWon);
 
-    EXPECT_THROW(portfolio.evaluate("Kalganid"), std::out_of_range);
+    EXPECT_THROW(portfolio.evaluate(bank, "Kalganid"), std::out_of_range);
 
     try {
-        portfolio.evaluate("Kalganid");
+        portfolio.evaluate(bank, "Kalganid");
     } catch (const std::out_of_range& ex) {
         EXPECT_STREQ(ex.what(), "Missing exchange rate(s):[USD->Kalganid,EUR->Kalganid,KRW->Kalganid,]");
+    }
+}
+
+TEST(TestBank, TestConversion)
+{
+    auto bank = Bank();
+    bank.addExchangeRate("EUR", "USD", 1.2);
+    auto tenEuros = Money(10, "EUR");
+    
+    EXPECT_EQ(bank.convert(tenEuros, "USD"), Money(12, "USD"));
+}
+
+TEST(TestBank, TestConversionWithMissingExchangeRate)
+{
+    auto bank = Bank();
+    auto tenEuros = Money(10, "EUR");
+
+    try {
+        bank.convert(tenEuros, "Kalganid");
+    } catch (const std::out_of_range& ex) {
+        EXPECT_STREQ(ex.what(), "EUR->Kalganid");
     }
 }

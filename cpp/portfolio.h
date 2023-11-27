@@ -7,6 +7,8 @@
 #include <map>
 #include <sstream>
 
+#include "bank.h"
+
 class Portfolio{
     private:
     std::vector<Money> moneys;
@@ -33,13 +35,13 @@ class Portfolio{
         std::vector<Money> moneys = {a};
         this->moneys.insert(this->moneys.end(),moneys.begin(),moneys.end());
     }
-    Money evaluate(std::string currency){
+    Money evaluate(Bank bank, std::string currency){
         double total = 0.0;
         std::vector<std::string> failures;
         std::stringstream failureMessage;
         for(const auto &money : moneys){
             try{
-                total += convert(money, currency);
+                total += bank.convert(money, currency).amount;
             }catch(std::out_of_range& ex){
                 failures.insert(failures.end(), ex.what());
             }

@@ -9,7 +9,7 @@ func (p Portfolio) Add(money Money) Portfolio {
 	return p
 }
 
-func (p Portfolio) Evalute(currency string) (Money, error) {
+func (p Portfolio) Evalute(bank Bank, currency string) (*Money, error) {
 	total := 0.0
 	failedConversions := make([]string, 0)
 	for _, m := range p {
@@ -21,16 +21,15 @@ func (p Portfolio) Evalute(currency string) (Money, error) {
 		}
 	}
 	if len(failedConversions) == 0 {
-		return NewMoney(total, currency), nil
+		totalMmoney := NewMoney(total, currency)
+		return &totalMmoney, nil
 	}
 	failures := "["
 	for _, f := range failedConversions {
 		failures = failures + f + ","
 	}
 	failures = failures + "]"
-
-	return NewMoney(0, ""),
-		errors.New("Missing exchange Rate(s):" + failures)
+	return nil, errors.New("Missing exchange Rate(s):" + failures)
 }
 
 func convert(money Money, currency string) (float64, bool) {
