@@ -4,7 +4,7 @@
 #include "bank.h"
 
 class TestPortfolio : public ::testing::Test {
-public:
+protected:
     Bank bank;
 
     void SetUp() override {
@@ -12,6 +12,10 @@ public:
         bank.addExchangeRate("EUR", "USD", 1.2);
         bank.addExchangeRate("USD", "KRW", 1100);
     }
+};
+
+class TestBank : public TestPortfolio {
+
 };
 
 TEST(TestMoney, TestMultiplication)
@@ -97,18 +101,23 @@ TEST_F(TestPortfolio, TestAdditionWithMultipleMissingExchangeRates)
     }
 }
 
-TEST(TestBank, TestConversion)
+TEST_F(TestBank, TestConversionWithDifferentRatesBetweenTwoCurrencies)
 {
-    auto bank = Bank();
-    bank.addExchangeRate("EUR", "USD", 1.2);
     auto tenEuros = Money(10, "EUR");
-    
     EXPECT_EQ(bank.convert(tenEuros, "USD"), Money(12, "USD"));
+
+    bank.addExchangeRate("EUR", "USD", 1.3);
+    EXPECT_EQ(bank.convert(tenEuros, "USD"), Money(13, "USD"));
 }
 
-TEST(TestBank, TestConversionWithMissingExchangeRate)
+// TEST_F(TestBank, TestWhatIsTheConversionRateFormEURToUSD)
+// {
+//     auto tenEuros = Money(10, "EUR");
+//     EXPECT_EQ(bank.convert(tenEuros, "USD"), Money(12, "USD"));
+// }
+
+TEST_F(TestBank, TestConversionWithMissingExchangeRate)
 {
-    auto bank = Bank();
     auto tenEuros = Money(10, "EUR");
 
     try {

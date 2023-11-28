@@ -11,7 +11,15 @@ class Bank{
 
     public:
         void addExchangeRate(std::string currencyFrom, std::string currencyTo, double rate){
-            exchangeRates.insert(std::make_pair(currencyFrom + "->" + currencyTo, rate));
+            std::pair<std::map<std::string, double>::iterator, bool> result;
+            result = exchangeRates.insert(std::make_pair(currencyFrom + "->" + currencyTo, rate));
+
+            //insert_or_assign only in C++17, but this project is use C++11
+            //so i need to create this one
+            if(result.second == false)
+            {
+                exchangeRates[currencyFrom + "->" + currencyTo] = rate;
+            }
         }
 
         Money convert(Money aMoney, std::string aCurrency){
