@@ -1,0 +1,48 @@
+name: Cpp CI
+
+jobs:
+    test:
+      name: "Tests"
+      strategy:
+        fail-fast: false
+        matrix:
+          include:
+            - name: Linux GCC
+              os: ubuntu-latest
+              compiler: g++-9
+  
+            - name: Linux Clang
+              os: ubuntu-latest
+              compiler: clang++
+  
+            - name: MacOS clang
+              os: macos-latest
+              compiler: clang++
+  
+            - name: Windows MSVC
+              os: windows-latest
+              compiler: cl
+  
+      runs-on: ${{ matrix.os }}
+      steps:
+        - name: "Checkout repository"
+          uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+  
+        - name: "Enable MSVC command prompt"
+          if: matrix.os == 'windows-latest'
+          uses: ilammy/msvc-dev-cmd@v1
+  
+        - name: "Install cmake"
+          uses: lukka/get-cmake@latest
+  
+        - name: "Build debug mode"
+          run: >
+            mkdir build;
+            cd build;
+            cmake ..
+            -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}
+            -DCMAKE_BUILD_TYPE=Debug;
+            cmake --build . --target test_money;
+            test_money;
