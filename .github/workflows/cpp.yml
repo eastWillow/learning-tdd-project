@@ -42,6 +42,7 @@ jobs:
   
         - name: "Build debug mode"
           run: >
+            cd cpp;
             mkdir build;
             cd build;
             cmake ..
