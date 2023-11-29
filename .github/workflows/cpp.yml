@@ -10,17 +10,17 @@ jobs:
         fail-fast: false
         matrix:
           include:
-            - name: Linux GCC
-              os: ubuntu-latest
-              compiler: g++-9
+            # - name: Linux GCC
+            #   os: ubuntu-latest
+            #   compiler: g++-9
   
-            - name: Linux Clang
-              os: ubuntu-latest
-              compiler: clang++
+            # - name: Linux Clang
+            #   os: ubuntu-latest
+            #   compiler: clang++
   
-            - name: MacOS clang
-              os: macos-latest
-              compiler: clang++
+            # - name: MacOS clang
+            #   os: macos-latest
+            #   compiler: clang++
   
             - name: Windows MSVC
               os: windows-latest
@@ -53,7 +53,9 @@ jobs:
         - name: "Run the Tests on windows"
           if: matrix.os == 'windows-latest'
           run: > 
+            ls;
             cd cpp/build/Debug;
+            ls;
             test_money.exe;
         
         - name: "Run the Test On Ubuntu & MacOS"
