@@ -53,7 +53,7 @@ jobs:
         - name: "Run the Tests on windows"
           if: matrix.os == 'windows-latest'
           run: > 
-            cd cpp/Debug/build;
+            cd cpp/build/Debug;
             test_money.exe;
         
         - name: "Run the Test On Ubuntu & MacOS"
