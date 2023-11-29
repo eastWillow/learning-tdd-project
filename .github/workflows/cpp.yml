@@ -56,7 +56,7 @@ jobs:
             ls;
             cd cpp/build/Debug;
             ls;
-            test_money.exe;
+            ./test_money.exe;
         
         - name: "Run the Test On Ubuntu & MacOS"
           if: matrix.os != 'windows-latest'
