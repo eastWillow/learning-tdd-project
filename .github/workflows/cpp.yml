@@ -1,5 +1,8 @@
 name: Cpp CI
 
+on: 
+    push:
+        branches: [ main ]
 jobs:
     test:
       name: "Tests"
