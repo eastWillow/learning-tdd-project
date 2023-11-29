@@ -49,4 +49,4 @@ jobs:
             -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}
             -DCMAKE_BUILD_TYPE=Debug;
             cmake --build . --target test_money;
-            test_money;
+            ./test_money;
