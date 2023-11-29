@@ -49,4 +49,15 @@ jobs:
             -DCMAKE_CXX_COMPILER=${{ matrix.compiler }}
             -DCMAKE_BUILD_TYPE=Debug;
             cmake --build . --target test_money;
+
+        - name: "Run the Tests on windows"
+          if: matrix.os == 'windows-latest'
+          run: > 
+            cd cpp;
+            test_money;
+        
+        - name: "Run the Test On Ubuntu & MacOS"
+          if: matrix.os != 'windows-latest'
+          run: > 
+            cd cpp;
             ./test_money;
